@@ -1,6 +1,6 @@
 <?php
 
-namespace OAuth\Model\Storage;
+namespace OAuthServer\Model\Storage;
 
 use Cake\Log\Log;
 use Cake\ORM\Entity;

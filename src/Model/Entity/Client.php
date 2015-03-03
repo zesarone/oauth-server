@@ -1,6 +1,6 @@
 <?php
 
-namespace OAuth\Model\Entity;
+namespace OAuthServer\Model\Entity;
 
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;

@@ -1,11 +1,11 @@
 <?php
-namespace OAuth\Controller\Component;
+namespace OAuthServer\Controller\Component;
 
 use Cake\Controller\Component;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
-use OAuth\Model\Storage;
+use OAuthServer\Model\Storage;
 
 class OAuthComponent extends Component {
 

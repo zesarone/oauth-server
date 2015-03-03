@@ -1,5 +1,5 @@
 <?php
-namespace OAuth\Model\Behavior;
+namespace OAuthServer\Model\Behavior;
 
 use Cake\Database\ExpressionInterface;
 use Cake\Event\Event;

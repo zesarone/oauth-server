@@ -1,5 +1,5 @@
 <?php
-namespace OAuth\Auth;
+namespace OAuthServer\Auth;
 
 use Cake\Auth\BaseAuthenticate;
 use Cake\Controller\ComponentRegistry;
@@ -11,7 +11,7 @@ use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use League\OAuth2\Server\Exception\OAuthException;
 use League\OAuth2\Server\ResourceServer;
-use OAuth\Model\Storage;
+use OAuthServer\Model\Storage;
 
 class OAuthAuthenticate extends BaseAuthenticate
 {

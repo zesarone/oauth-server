@@ -1,5 +1,5 @@
 <?php
-namespace OAuth\Controller;
+namespace OAuthServer\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
@@ -11,7 +11,7 @@ use League\OAuth2\Server\Util\RedirectUri;
 /**
  * Class OAuthController
  *
- * @property \OAuth\Controller\Component\OAuthComponent $OAuth
+ * @property \OAuthServer\Controller\Component\OAuthComponent $OAuth
  */
 class OAuthController extends AppController
 {

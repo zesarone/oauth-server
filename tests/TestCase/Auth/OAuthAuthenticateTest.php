@@ -1,10 +1,10 @@
 <?php
-namespace OAuth\Test\TestCase\Auth;
+namespace OAuthServer\Test\TestCase\Auth;
 
 use Cake\Network\Request;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use OAuth\Auth\OAuthAuthenticate;
+use OAuthServer\Auth\OAuthAuthenticate;
 
 class OAuthAuthenticateTest extends TestCase {
 

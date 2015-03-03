@@ -1,6 +1,6 @@
 <?php
 
-namespace OAuth\Model\Storage;
+namespace OAuthServer\Model\Storage;
 
 use League\OAuth2\Server\Entity\ClientEntity;
 use League\OAuth2\Server\Entity\SessionEntity;

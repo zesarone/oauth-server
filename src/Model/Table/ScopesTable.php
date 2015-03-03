@@ -1,5 +1,5 @@
 <?php
-namespace OAuth\Model\Table;
+namespace OAuthServer\Model\Table;
 
 use Cake\ORM\Table;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace OAuth\Model\Storage;
+namespace OAuthServer\Model\Storage;
 
 use Cake\ORM\Entity;
 use League\OAuth2\Server\Entity\AccessTokenEntity;

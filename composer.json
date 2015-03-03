@@ -14,13 +14,13 @@
     },
     "autoload": {
       "psr-4": {
-        "OAuth\\": "src"
+        "OAuthServer\\": "src"
       }
     },
     "autoload-dev": {
       "psr-4": {
         "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
-        "OAuth\\Test\\": "tests"
+        "OAuthServer\\Test\\": "tests"
       }
     },
     "license": "MIT",

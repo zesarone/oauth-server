@@ -1,5 +1,5 @@
 <?php
-namespace OAuth\Model\Storage;
+namespace OAuthServer\Model\Storage;
 
 use Cake\Datasource\ModelAwareTrait;
 use League\OAuth2\Server\Storage\AbstractStorage as BaseAbstractStorage;

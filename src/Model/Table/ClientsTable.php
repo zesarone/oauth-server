@@ -1,9 +1,9 @@
 <?php
-namespace OAuth\Model\Table;
+namespace OAuthServer\Model\Table;
 
 use Cake\Event\Event;
 use Cake\ORM\Table;
-use OAuth\Model\Entity\Client;
+use OAuthServer\Model\Entity\Client;
 
 /**
  * Client Model
