@@ -1,0 +1,33 @@
+{
+    "name": "uafrica.com/oauth-server",
+    "description": "OAuth Server for CakePHP 3 using the PHP League's OAuth Server",
+    "type": "cakephp-plugin",
+    "keywords": ["cakephp", "oauth", "oauth2", "oauth server", "oauth2 server"],
+    "require": {
+        "php": ">= 5.5",
+        "cakephp/cakephp": "3.0.x-dev",
+        "league/oauth2-server": "~4.1",
+        "cakephp/migrations": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.5"
+    },
+    "autoload": {
+      "psr-4": {
+        "OAuth\\": "src"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
+        "OAuth\\Test\\": "tests"
+      }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Walther Lalk",
+            "email": "waltherlalk@gmail.com"
+        }
+    ]
+}
