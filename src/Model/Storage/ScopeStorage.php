@@ -16,7 +16,8 @@ class ScopeStorage extends AbstractStorage implements ScopeInterface
         $result = $this->Scopes->find()
             ->where([
                 'id' => $scope
-            ]);
+            ])
+            ->first();
 
         if ($result) {
             return (new ScopeEntity($this->server))->hydrate(
