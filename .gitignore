@@ -1,3 +1,4 @@
 !empty
 vendor/
 plugins/
+composer.lock
