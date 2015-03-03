@@ -29,19 +29,24 @@ class OAuthAuthenticate extends BaseAuthenticate
 
     public function __construct(ComponentRegistry $registry, $config) {
         parent::__construct($registry, $config);
-        $sessionStorage = new Storage\SessionStorage();
-        $accessTokenStorage = new Storage\AccessTokenStorage();
-        $clientStorage = new Storage\ClientStorage();
-        $scopeStorage = new Storage\ScopeStorage();
 
-        $server = new ResourceServer(
-            $sessionStorage,
-            $accessTokenStorage,
-            $clientStorage,
-            $scopeStorage
-        );
+        if ($this->config('server')) {
+            $this->Server = $this->config('server');
+        } else {
+            $sessionStorage = new Storage\SessionStorage();
+            $accessTokenStorage = new Storage\AccessTokenStorage();
+            $clientStorage = new Storage\ClientStorage();
+            $scopeStorage = new Storage\ScopeStorage();
 
-        $this->Server = $server;
+            $server = new ResourceServer(
+                $sessionStorage,
+                $accessTokenStorage,
+                $clientStorage,
+                $scopeStorage
+            );
+
+            $this->Server = $server;
+        }
     }
 
     /**
