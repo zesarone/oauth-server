@@ -21,13 +21,13 @@ class AuthCodesTable extends Table
         $this->belongsTo(
             'Sessions',
             [
-                'className' => 'OAuth.Sessions',
+                'className' => 'OAuthServer.Sessions',
             ]
         );
         $this->hasMany(
             'AuthCodeScopes',
             [
-                'className' => 'OAuth.AuthCodeScopes',
+                'className' => 'OAuthServer.AuthCodeScopes',
                 'foreignKey' => 'auth_code',
                 'dependant' => true
             ]

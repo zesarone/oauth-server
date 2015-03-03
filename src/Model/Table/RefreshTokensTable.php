@@ -18,7 +18,7 @@ class RefreshTokensTable extends Table
         $this->table('oauth_refresh_tokens');
         $this->primaryKey('refresh_token');
         $this->belongsTo('AccessTokens', [
-            'className' => 'OAuth.AccessTokens',
+            'className' => 'OAuthServer.AccessTokens',
             'foreignKey' => 'oauth_token'
         ]);
         parent::initialize($config);

@@ -9,11 +9,11 @@ class AccessTokenScopesTable extends Table {
     {
         $this->table('oauth_access_token_scopes');
         $this->belongsTo('AccessTokens', [
-            'className' => 'OAuth.AccessTokens',
+            'className' => 'OAuthServer.AccessTokens',
             'foreignKey' => 'oauth_token'
         ]);
         $this->belongsTo('Scopes', [
-            'className' => 'OAuth.Scopes'
+            'className' => 'OAuthServer.Scopes'
         ]);
         parent::initialize($config);
     }

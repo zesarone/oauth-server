@@ -18,10 +18,10 @@ class AccessTokensTable extends Table
         $this->table('oauth_access_tokens');
         $this->primaryKey('oauth_token');
         $this->belongsTo('Sessions', [
-            'className' => 'OAuth.Sessions',
+            'className' => 'OAuthServer.Sessions',
         ]);
         $this->hasMany('AccessTokenScopes', [
-            'className' => 'OAuth.AccessTokenScopes',
+            'className' => 'OAuthServer.AccessTokenScopes',
             'foreignKey' => 'oauth_token',
             'dependant' => true
         ]);

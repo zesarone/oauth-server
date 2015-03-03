@@ -89,7 +89,7 @@ class OAuthAuthenticate extends BaseAuthenticate
             $this->Server->isValidRequest();
             $ownerModel = $this->Server->getAccessToken()->getSession()->getOwnerType();
             $ownerId = $this->Server->getAccessToken()->getSession()->getOwnerId();
-            $event = new Event('OAuth.getUser', $request, [$ownerModel, $ownerId]);
+            $event = new Event('OAuthServer.getUser', $request, [$ownerModel, $ownerId]);
             EventManager::instance()->dispatch($event);
             if ($event->result) {
                 return $event->result;

@@ -29,7 +29,7 @@ class OAuthController extends AppController
                 'secure' => true
             ]
         );
-        $this->loadComponent('OAuth.OAuth');
+        $this->loadComponent('OAuthServer.OAuth');
         $this->loadComponent('RequestHandler');
         parent::initialize();
     }
@@ -98,7 +98,7 @@ class OAuthController extends AppController
             );
         }
 
-        $event = new Event('OAuth.beforeAuthorize', $this);
+        $event = new Event('OAuthServer.beforeAuthorize', $this);
         EventManager::instance()->dispatch($event);
 
         if (is_array($event->result)) {
@@ -109,11 +109,11 @@ class OAuthController extends AppController
             $ownerModel = isset($this->request->data['owner_model']) ? $this->request->data['owner_model'] : 'Users';
             $ownerId = isset($this->request->data['owner_id']) ? $this->request->data['owner_id'] : $this->Auth->user('id');
             $redirectUri = $this->OAuth->Server->getGrantType('authorization_code')->newAuthorizeRequest($ownerModel, $ownerId, $authParams);
-            $event = new Event('OAuth.afterAuthorize', $this);
+            $event = new Event('OAuthServer.afterAuthorize', $this);
             EventManager::instance()->dispatch($event);
             return $this->redirect($redirectUri);
         } elseif ($this->request->is('post')) {
-            $event = new Event('OAuth.afterDeny', $this);
+            $event = new Event('OAuthServer.afterDeny', $this);
             EventManager::instance()->dispatch($event);
 
             $error = new AccessDeniedException();

@@ -14,7 +14,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function get($token)
     {
-        $this->loadModel('OAuth.AccessTokens');
+        $this->loadModel('OAuthServer.AccessTokens');
         $result = $this->AccessTokens->find()
             ->select([
                 'oauth_token',
@@ -39,7 +39,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function getScopes(AccessTokenEntity $token)
     {
-        $this->loadModel('OAuth.AccessTokenScopes');
+        $this->loadModel('OAuthServer.AccessTokenScopes');
         $result = $this->AccessTokenScopes->find()
             ->contain([
                 'Scopes'
@@ -64,7 +64,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function create($token, $expireTime, $sessionId)
     {
-        $this->loadModel('OAuth.AccessTokens');
+        $this->loadModel('OAuthServer.AccessTokens');
         $token = $this->AccessTokens->newEntity([
             'oauth_token' => $token,
             'session_id' => $sessionId,
@@ -78,7 +78,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function associateScope(AccessTokenEntity $token, ScopeEntity $scope)
     {
-        $this->loadModel('OAuth.AccessTokenScopes');
+        $this->loadModel('OAuthServer.AccessTokenScopes');
         $token_scope = $this->AccessTokenScopes->newEntity(
             [
                 'oauth_token' => $token->getId(),
@@ -93,7 +93,7 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
      */
     public function delete(AccessTokenEntity $token)
     {
-        $this->loadModel('OAuth.AccessTokens');
+        $this->loadModel('OAuthServer.AccessTokens');
         $access_token = $this->AccessTokens->findByOauthToken($token->getId())->first();
         $this->AccessTokens
             ->delete($access_token, ['cascade' => true]);

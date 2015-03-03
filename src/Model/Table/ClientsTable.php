@@ -20,7 +20,7 @@ class ClientsTable extends Table
         $this->table('oauth_clients');
         $this->primaryKey('client_id');
         $this->addBehavior(
-            'OAuth.HashedField',
+            'OAuthServer.HashedField',
             [
                 'fields' => [
                     'client_secret'
@@ -28,7 +28,7 @@ class ClientsTable extends Table
             ]
         );
         $this->hasMany('Sessions', [
-            'className' => 'OAuth.Sessions'
+            'className' => 'OAuthServer.Sessions'
         ]);
         parent::initialize($config);
     }

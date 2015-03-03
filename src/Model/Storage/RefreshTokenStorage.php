@@ -12,7 +12,7 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
      */
     public function get($token)
     {
-        $this->loadModel('OAuth.RefreshTokens');
+        $this->loadModel('OAuthServer.RefreshTokens');
         $result = $this->RefreshTokens
             ->find()
             ->where([
@@ -37,7 +37,7 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
      */
     public function create($token, $expireTime, $accessToken)
     {
-        $this->loadModel('OAuth.RefreshTokens');
+        $this->loadModel('OAuthServer.RefreshTokens');
         $refresh_token = $this->RefreshTokens->newEntity([
             'refresh_token' => $token,
             'oauth_token' => $accessToken,
@@ -51,7 +51,7 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
      */
     public function delete(RefreshTokenEntity $token)
     {
-        $this->loadModel('OAuth.RefreshTokens');
+        $this->loadModel('OAuthServer.RefreshTokens');
         $this->RefreshTokens->deleteAll([
             'refresh_token' => $token->getId()
         ]);

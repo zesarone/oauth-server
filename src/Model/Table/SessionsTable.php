@@ -11,25 +11,25 @@ class SessionsTable extends Table {
         $this->hasMany(
             'SessionScopes',
             [
-                'className' => 'OAuth.SessionScopes',
+                'className' => 'OAuthServer.SessionScopes',
                 'dependant' => true
             ]
         );
         $this->hasMany('AuthCodes', [
-            'className' => 'OAuth.AuthCodes',
+            'className' => 'OAuthServer.AuthCodes',
             'dependant' => true
         ]);
         $this->hasMany(
             'AccessTokens',
             [
-                'className' => 'OAuth.AccessTokens',
+                'className' => 'OAuthServer.AccessTokens',
                 'dependant' => true
             ]
         );
         $this->hasMany(
             'RefreshTokens',
             [
-                'className' => 'OAuth.RefreshTokens',
+                'className' => 'OAuthServer.RefreshTokens',
                 'dependant' => true
             ]
         );

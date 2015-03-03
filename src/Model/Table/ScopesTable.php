@@ -9,18 +9,18 @@ class ScopesTable extends Table {
     {
         $this->table('oauth_scopes');
         $this->hasMany('AccessTokenScopes', [
-            'className' => 'OAuth.AccessTokenScopes'
+            'className' => 'OAuthServer.AccessTokenScopes'
         ]);
         $this->hasMany(
             'AuthCodeScopes',
             [
-                'className' => 'OAuth.AuthCodeScopes'
+                'className' => 'OAuthServer.AuthCodeScopes'
             ]
         );
         $this->hasMany(
             'SessionScopes',
             [
-                'className' => 'OAuth.SessionScopes'
+                'className' => 'OAuthServer.SessionScopes'
             ]
         );
         parent::initialize($config);

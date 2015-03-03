@@ -13,7 +13,7 @@ class ClientStorage extends AbstractStorage implements ClientInterface
      */
     public function get($clientId, $clientSecret = null, $redirectUri = null, $grantType = null)
     {
-        $this->loadModel('OAuth.Clients');
+        $this->loadModel('OAuthServer.Clients');
         $query = $this->Clients
             ->find()
             ->where([
@@ -48,7 +48,7 @@ class ClientStorage extends AbstractStorage implements ClientInterface
      */
     public function getBySession(SessionEntity $session)
     {
-        $this->loadModel('OAuth.Sessions');
+        $this->loadModel('OAuthServer.Sessions');
         $result = $this->Sessions
             ->find()
             ->contain(['Clients'])

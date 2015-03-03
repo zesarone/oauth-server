@@ -12,7 +12,7 @@ class ScopeStorage extends AbstractStorage implements ScopeInterface
      */
     public function get($scope, $grantType = null, $clientId = null)
     {
-        $this->loadModel('OAuth.Scopes');
+        $this->loadModel('OAuthServer.Scopes');
         $result = $this->Scopes->find()
             ->where([
                 'id' => $scope

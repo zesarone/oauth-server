@@ -16,7 +16,7 @@ class SessionStorage extends AbstractStorage implements SessionInterface
      */
     public function getByAccessToken(AccessTokenEntity $accessToken)
     {
-        $this->loadModel('OAuth.Sessions');
+        $this->loadModel('OAuthServer.Sessions');
         $result = $this->Sessions
             ->find()
             ->matching(
@@ -48,7 +48,7 @@ class SessionStorage extends AbstractStorage implements SessionInterface
      */
     public function getByAuthCode(AuthCodeEntity $authCode)
     {
-        $this->loadModel('OAuth.Sessions');
+        $this->loadModel('OAuthServer.Sessions');
         $result = $this->Sessions
             ->find()
             ->matching('AuthCodes', function($q) use ($authCode) {
@@ -77,7 +77,7 @@ class SessionStorage extends AbstractStorage implements SessionInterface
      */
     public function getScopes(SessionEntity $session)
     {
-        $this->loadModel('OAuth.SessionScopes');
+        $this->loadModel('OAuthServer.SessionScopes');
         $result = $this->SessionScopes->find()
             ->contain(
                 [
@@ -108,7 +108,7 @@ class SessionStorage extends AbstractStorage implements SessionInterface
      */
     public function create($ownerType, $ownerId, $clientId, $clientRedirectUri = null)
     {
-        $this->loadModel('OAuth.Sessions');
+        $this->loadModel('OAuthServer.Sessions');
         $session = $this->Sessions->newEntity(
             [
                 'owner_model' => $ownerType,
@@ -126,7 +126,7 @@ class SessionStorage extends AbstractStorage implements SessionInterface
      */
     public function associateScope(SessionEntity $session, ScopeEntity $scope)
     {
-        $this->loadModel('OAuth.SessionScopes');
+        $this->loadModel('OAuthServer.SessionScopes');
         $session_scope = $this->SessionScopes->newEntity(
             [
                 'session_id' => $session->getId(),
