@@ -12,7 +12,8 @@ class AuthCodeScopesTable extends Table {
             'AuthCodes',
             [
                 'className' => 'OAuthServer.AuthCodes',
-                'foreignKey' => 'auth_code'
+                'foreignKey' => 'auth_code',
+                'propertyName' => 'code'
             ]
         );
         $this->belongsTo(

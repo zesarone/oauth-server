@@ -81,10 +81,10 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
     {
         $this->loadModel('OAuthServer.AuthCodeScopes');
         $code_scope = $this->AuthCodeScopes->newEntity([
-            'code' => $token->getId(),
+            'auth_code' => $token->getId(),
             'scope_id' => $scope->getId(),
         ]);
-        $this->CodeScopes->save($code_scope);
+        $this->AuthCodeScopes->save($code_scope);
     }
 
     /**
