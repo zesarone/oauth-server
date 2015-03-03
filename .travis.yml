@@ -1,0 +1,48 @@
+language: php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+
+sudo: false
+
+env:
+  matrix:
+    - DB=sqlite db_dsn='sqlite:///:memory:'
+  global:
+    - DEFAULT=1
+
+matrix:
+  allow_failures:
+    - php: hhvm
+    - php: hhvm-nightly
+
+  fast_finish: true
+
+  include:
+    - php: 5.4
+      env: PHPCS=1 DEFAULT=0
+
+    - php: hhvm
+      env: HHVM=1 DB=sqlite db_dsn='sqlite:///:memory:'
+
+    - php: hhvm-nightly
+      env: HHVM=1 DB=mysql db_dsn='mysql://travis@0.0.0.0/cakephp_test'
+
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+
+  - sh -c "if [ '$PHPCS' = '1' ]; then composer require squizlabs/php_codesniffer; fi"
+
+  - phpenv rehash
+  - set +H
+  - cp phpunit.xml.dist phpunit.xml
+
+script:
+  - sh -c "if [ '$DEFAULT' = '1' ]; then phpunit --stderr; fi"
+  - sh -c "if [ '$PHPCS' = '1' ]; then vendor/bin/phpcs -p --extensions=php --standard=psr2 --ignore=tests/bootstrap.php ./src ./tests ; fi"
+
+notifications:
+  email: false
