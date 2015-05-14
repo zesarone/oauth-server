@@ -15,6 +15,9 @@ use League\OAuth2\Server\Util\RedirectUri;
  */
 class OAuthController extends AppController
 {
+    /**
+     * @return void
+     */
     public function initialize()
     {
         $this->loadComponent(
@@ -35,8 +38,8 @@ class OAuthController extends AppController
     }
 
     /**
-     * beforeFilter
-     *
+     * @param \Cake\Event\Event $event Event object.
+     * @return void
      */
     public function beforeFilter(Event $event)
     {
@@ -53,6 +56,9 @@ class OAuthController extends AppController
         parent::beforeFilter($event);
     }
 
+    /**
+     * @return void
+     */
     public function oauth()
     {
         if ($this->OAuth->checkAuthParams('authorization_code')) {
@@ -79,6 +85,10 @@ class OAuthController extends AppController
         }
     }
 
+    /**
+     * @return \Cake\Network\Response|void
+     * @throws \League\OAuth2\Server\Exception\InvalidGrantException
+     */
     public function authorize() {
         if (!$authParams = $this->OAuth->checkAuthParams('authorization_code')) {
             return;
@@ -133,6 +143,9 @@ class OAuthController extends AppController
         $this->set('user', $this->Auth->user());
     }
 
+    /**
+     * @return bool
+     */
     public function accessToken() {
         try {
             $response = $this->OAuth->Server->issueAccessToken();
@@ -143,8 +156,6 @@ class OAuthController extends AppController
             $this->response->statusCode($e->httpStatusCode);
             $this->response->header($e->getHttpHeaders());
             $this->set('response', $e);
-            return false;
         }
     }
-
 }
