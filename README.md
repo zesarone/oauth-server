@@ -1,5 +1,8 @@
 # OAuth2 Server for CakePHP 3
 
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
+[![Build Status](https://img.shields.io/travis/uafrica/oauth-server/master.svg?style=flat-square)](https://travis-ci.org/uafrica/oauth-server)
+
 A plugin for implementing an OAuth2 server in CakePHP 3. Built on top of the [PHP League's OAuth2 Server](http://oauth2.thephpleague.com/).
 
 ## Installation
