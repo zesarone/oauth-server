@@ -22,6 +22,7 @@ class AuthCodesTable extends Table
             'Sessions',
             [
                 'className' => 'OAuthServer.Sessions',
+                'foreignKey' => 'session_id'
             ]
         );
         $this->hasMany(

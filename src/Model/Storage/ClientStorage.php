@@ -17,24 +17,23 @@ class ClientStorage extends AbstractStorage implements ClientInterface
         $query = $this->Clients
             ->find()
             ->where([
-                'client_id' => $clientId
+                $this->Clients->aliasField('id') => $clientId
             ]);
 
         if ($clientSecret !== null) {
-            $query->where(['client_secret' => $clientSecret]);
+            $query->where([$this->Clients->aliasField('client_secret') => $clientSecret]);
         }
 
         if ($redirectUri) {
-            $query->where(['redirect_uri' => $redirectUri]);
+            $query->where([$this->Clients->aliasField('redirect_uri') => $redirectUri]);
         }
 
         $result = $query->first();
-
         if ($result) {
             $client = new ClientEntity($this->server);
             $client->hydrate([
-                'id'    =>  $result->client_id,
-                'name'  =>  $result->parent->name
+                'id'    =>  $result->id,
+                'name'  =>  $result->name
             ]);
 
             return $client;
@@ -60,7 +59,7 @@ class ClientStorage extends AbstractStorage implements ClientInterface
         if ($result) {
             $client = new ClientEntity($this->server);
             $client->hydrate([
-                'id'    =>  $result->client->client_id,
+                'id'    =>  $result->client->id,
                 'name'  =>  $result->client->name,
             ]);
 

@@ -25,4 +25,8 @@
         $routes->connect('/', ['action' => 'index']);
         $routes->connect('/:action/*');
     });
+    $routes->scope('/scopes', ['controller' => 'Scopes'], function (\Cake\Routing\RouteBuilder $routes) {
+        $routes->connect('/', ['action' => 'index']);
+        $routes->connect('/:action/*');
+    });
 });

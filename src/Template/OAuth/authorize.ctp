@@ -3,7 +3,7 @@
 <ul>
     <?php foreach ($authParams['scopes'] as $scope): ?>
         <li>
-            <?= $scope->getName() ?>: <?= $scope->getDescription() ?>
+            <?= $scope->getId() ?>: <?= $scope->getDescription() ?>
         </li>
     <?php endforeach; ?>
 </ul>

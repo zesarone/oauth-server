@@ -5,23 +5,24 @@ use App\Controller\AppController;
 use Crud\Controller\ControllerTrait;
 
 /**
- * OauthClients Controller
+ * Scopes Controller
  *
- * @property \OAuthServer\Model\Table\ClientsTable $Clients
+ * @property \OAuthServer\Model\Table\ScopesTable $Scopes
  */
-class ClientsController extends AppController
+class ScopesController extends AppController
 {
 
     use ControllerTrait;
 
-    public $modelClass = 'OAuthServer.Clients';
+    public $modelClass = 'OAuthServer.Scopes';
 
     public function initialize()
     {
         parent::initialize();
         $this->viewClass = 'CrudView\View\CrudView';
         $tables = [
-            'Clients'
+            'Clients',
+            'Scopes'
         ];
         $this->loadComponent('Crud.Crud', [
             'actions' => [
@@ -42,13 +43,11 @@ class ClientsController extends AppController
                     'scaffold' => [
                         'tables' => $tables,
                         'fields' => [
-                            'name',
-                            'redirect_uri',
-                            'parent_model',
-                            'parent_id' => [
-                                'label' => 'Parent ID',
+                            'id' => [
+                                'label' => 'ID',
                                 'type' => 'text'
-                            ]
+                            ],
+                            'description',
                         ]
                     ]
                 ],
@@ -57,13 +56,11 @@ class ClientsController extends AppController
                     'scaffold' => [
                         'tables' => $tables,
                         'fields' => [
-                            'name',
-                            'redirect_uri',
-                            'parent_model',
-                            'parent_id' => [
-                                'label' => 'Parent ID',
+                            'id' => [
+                                'label' => 'ID',
                                 'type' => 'text'
-                            ]
+                            ],
+                            'description',
                         ]
                     ]
                 ],

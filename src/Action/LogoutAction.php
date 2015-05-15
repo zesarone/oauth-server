@@ -1,6 +1,6 @@
 <?php
 
-namespace CrudUsers\Action;
+namespace OAuthServer\Action;
 
 use Crud\Action\BaseAction;
 use Crud\Event\Subject;

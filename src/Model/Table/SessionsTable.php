@@ -12,17 +12,20 @@ class SessionsTable extends Table {
             'SessionScopes',
             [
                 'className' => 'OAuthServer.SessionScopes',
+                'foreignKey' => 'session_id',
                 'dependant' => true
             ]
         );
         $this->hasMany('AuthCodes', [
             'className' => 'OAuthServer.AuthCodes',
+            'foreignKey' => 'session_id',
             'dependant' => true
         ]);
         $this->hasMany(
             'AccessTokens',
             [
                 'className' => 'OAuthServer.AccessTokens',
+                'foreignKey' => 'session_id',
                 'dependant' => true
             ]
         );
@@ -30,6 +33,7 @@ class SessionsTable extends Table {
             'RefreshTokens',
             [
                 'className' => 'OAuthServer.RefreshTokens',
+                'foreignKey' => 'session_id',
                 'dependant' => true
             ]
         );

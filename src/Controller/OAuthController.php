@@ -20,18 +20,6 @@ class OAuthController extends AppController
      */
     public function initialize()
     {
-        $this->loadComponent(
-            'Security',
-            [
-                'blackHoleCallback' => 'blackHole'
-            ]
-        );
-        $this->loadComponent(
-            'Csrf',
-            [
-                'secure' => true
-            ]
-        );
         $this->loadComponent('OAuthServer.OAuth');
         $this->loadComponent('RequestHandler');
         parent::initialize();
@@ -45,12 +33,6 @@ class OAuthController extends AppController
     {
         if ($this->Auth) {
             $this->Auth->allow(['oauth', 'authorize', 'accessToken']);
-        }
-
-        $this->Security->config('unlockedActions', ['accessToken']);
-
-        if ($this->isAction('accessToken')) {
-            $this->eventManager()->off($this->Csrf);
         }
 
         parent::beforeFilter($event);
@@ -154,7 +136,9 @@ class OAuthController extends AppController
         } catch (OAuthException $e) {
             $this->RequestHandler->renderAs($this, 'json');
             $this->response->statusCode($e->httpStatusCode);
-            $this->response->header($e->getHttpHeaders());
+            $headers = $e->getHttpHeaders();
+            array_shift($headers);
+            $this->response->header($headers);
             $this->set('response', $e);
         }
     }

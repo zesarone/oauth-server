@@ -1,6 +1,6 @@
 <?php
 
-namespace CrudUsers\Action;
+namespace OAuthServer\Action;
 
 use Crud\Action\BaseAction;
 use Crud\Event\Subject;
@@ -70,9 +70,18 @@ class LoginAction extends BaseAction
         $this->_controller()->Auth->setUser($subject->user);
         $this->setFlash('success', $subject);
 
+        $redirect_uri = $this->_controller()->Auth->redirectUrl();
+        if ($this->_request()->query['redir'] == "oauth") {
+            $redirect_uri = [
+                'plugin' => 'OAuthServer',
+                'controller' => 'OAuth',
+                'action' => 'authorize',
+                '?' => $this->_request()->query
+            ];
+        }
+
         return $this->_redirect(
-            $subject,
-            $this->_controller()->Auth->redirectUrl()
+            $subject, $redirect_uri
         );
     }
 

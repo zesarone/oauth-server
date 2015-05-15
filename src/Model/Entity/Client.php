@@ -20,8 +20,25 @@ class Client extends Entity
         $this->_original['client_secret'] = $this->client_secret;
     }
 
-    protected function _getParent() {
+    /**
+     * @return \Cake\Datasource\EntityInterface|mixed|null
+     */
+    protected function _getParent()
+    {
+        if (empty($this->parent_model)) {
+            return null;
+        }
         $parent_table = TableRegistry::get($this->parent_model);
         return $parent_table->get($this->parent_id);
+    }
+
+    /**
+     * @return string
+     */
+    protected function _getName($name)
+    {
+        $parent = $this->parent;
+
+        return $parent ? $parent->name : $name;
     }
 }
