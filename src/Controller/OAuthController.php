@@ -71,7 +71,8 @@ class OAuthController extends AppController
      * @return \Cake\Network\Response|void
      * @throws \League\OAuth2\Server\Exception\InvalidGrantException
      */
-    public function authorize() {
+    public function authorize()
+    {
         if (!$authParams = $this->OAuth->checkAuthParams('authorization_code')) {
             return;
         }
@@ -126,9 +127,10 @@ class OAuthController extends AppController
     }
 
     /**
-     * @return bool
+     * @return void
      */
-    public function accessToken() {
+    public function accessToken()
+    {
         try {
             $response = $this->OAuth->Server->issueAccessToken();
             $this->RequestHandler->renderAs($this, 'json');

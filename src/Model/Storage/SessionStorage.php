@@ -17,19 +17,12 @@ class SessionStorage extends AbstractStorage implements SessionInterface
     public function getByAccessToken(AccessTokenEntity $accessToken)
     {
         $this->loadModel('OAuthServer.Sessions');
-        $result = $this->Sessions
-            ->find()
-            ->matching(
-                'AccessTokens',
-                function ($q) use ($accessToken) {
-                    return $q
-                        ->where(
-                            [
-                                'oauth_token' => $accessToken->getId()
-                            ]
-                        );
-                }
-            )
+        $result = $this->Sessions->find()
+            ->matching('AccessTokens', function ($q) use ($accessToken) {
+                return $q->where([
+                            'oauth_token' => $accessToken->getId()
+                        ]);
+            })
             ->first();
 
         if ($result) {
@@ -49,15 +42,11 @@ class SessionStorage extends AbstractStorage implements SessionInterface
     public function getByAuthCode(AuthCodeEntity $authCode)
     {
         $this->loadModel('OAuthServer.Sessions');
-        $result = $this->Sessions
-            ->find()
-            ->matching('AuthCodes', function($q) use ($authCode) {
-                return $q
-                    ->where(
-                        [
+        $result = $this->Sessions->find()
+            ->matching('AuthCodes', function ($q) use ($authCode) {
+                return $q->where([
                             'code' => $authCode->getId()
-                        ]
-                    );
+                        ]);
             })
             ->first();
 
@@ -79,26 +68,18 @@ class SessionStorage extends AbstractStorage implements SessionInterface
     {
         $this->loadModel('OAuthServer.SessionScopes');
         $result = $this->SessionScopes->find()
-            ->contain(
-                [
+            ->contain([
                     'Scopes'
-                ]
-            )
-            ->where(
-                [
+                ])
+            ->where([
                     'session_id' => $session->getId()
-                ]
-            )
-            ->map(
-                function (Entity $scope) {
-                    return (new ScopeEntity($this->server))->hydrate(
-                        [
-                            'id' => $scope->scope->id,
-                            'description' => $scope->scope->description,
-                        ]
-                    );
-                }
-            );
+                ])
+            ->map(function (Entity $scope) {
+                return (new ScopeEntity($this->server))->hydrate([
+                        'id' => $scope->scope->id,
+                        'description' => $scope->scope->description,
+                    ]);
+            });
 
         return $result->toArray();
     }
@@ -109,13 +90,11 @@ class SessionStorage extends AbstractStorage implements SessionInterface
     public function create($ownerType, $ownerId, $clientId, $clientRedirectUri = null)
     {
         $this->loadModel('OAuthServer.Sessions');
-        $session = $this->Sessions->newEntity(
-            [
+        $session = $this->Sessions->newEntity([
                 'owner_model' => $ownerType,
                 'owner_id' => $ownerId,
                 'client_id' => $clientId,
-            ]
-        );
+            ]);
         $this->Sessions->save($session);
 
         return $session->id;
@@ -127,12 +106,10 @@ class SessionStorage extends AbstractStorage implements SessionInterface
     public function associateScope(SessionEntity $session, ScopeEntity $scope)
     {
         $this->loadModel('OAuthServer.SessionScopes');
-        $session_scope = $this->SessionScopes->newEntity(
-            [
+        $sessionScope = $this->SessionScopes->newEntity([
                 'session_id' => $session->getId(),
                 'scope_id' => $scope->getId(),
-            ]
-        );
-        $this->SessionScopes->save($session_scope);
+            ]);
+        $this->SessionScopes->save($sessionScope);
     }
 }

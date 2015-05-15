@@ -12,7 +12,10 @@ use Cake\ORM\Table;
  */
 class AccessTokensTable extends Table
 {
-
+    /**
+     * @param array $config Config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->table('oauth_access_tokens');

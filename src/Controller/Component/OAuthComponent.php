@@ -7,13 +7,18 @@ use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use OAuthServer\Model\Storage;
 
-class OAuthComponent extends Component {
+class OAuthComponent extends Component
+{
 
     /**
      * @var \League\OAuth2\Server\AuthorizationServer
      */
     public $Server;
 
+    /**
+     * @param array $config Config array
+     * @return void
+     */
     public function initialize(array $config)
     {
         $server = new AuthorizationServer();
@@ -37,6 +42,10 @@ class OAuthComponent extends Component {
         parent::initialize($config);
     }
 
+    /**
+     * @param string $authGrant Grant type
+     * @return bool|\Cake\Network\Response|void
+     */
     public function checkAuthParams($authGrant) {
         $controller = $this->_registry->getController();
         try {
@@ -53,5 +62,4 @@ class OAuthComponent extends Component {
             return false;
         }
     }
-
 }

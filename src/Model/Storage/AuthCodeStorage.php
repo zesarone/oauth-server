@@ -35,6 +35,9 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
         return;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function create($token, $expireTime, $sessionId, $redirectUri)
     {
         $this->loadModel('OAuthServer.AuthCodes');
@@ -60,16 +63,12 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
             ->where([
                 'auth_code' => $token->getId()
             ])
-            ->map(
-                function (Entity $scope) {
-                    return (new ScopeEntity($this->server))->hydrate(
-                        [
-                            'id' => $scope->scope->id,
-                            'description' => $scope->scope->description,
-                        ]
-                    );
-                }
-            );
+            ->map(function (Entity $scope) {
+                return (new ScopeEntity($this->server))->hydrate([
+                        'id' => $scope->scope->id,
+                        'description' => $scope->scope->description,
+                    ]);
+            });
 
         return $result->toArray();
     }
@@ -80,11 +79,11 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
     public function associateScope(AuthCodeEntity $token, ScopeEntity $scope)
     {
         $this->loadModel('OAuthServer.AuthCodeScopes');
-        $code_scope = $this->AuthCodeScopes->newEntity([
+        $codeScope = $this->AuthCodeScopes->newEntity([
             'auth_code' => $token->getId(),
             'scope_id' => $scope->getId(),
         ]);
-        $this->AuthCodeScopes->save($code_scope);
+        $this->AuthCodeScopes->save($codeScope);
     }
 
     /**
@@ -93,8 +92,7 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
     public function delete(AuthCodeEntity $token)
     {
         $this->loadModel('OAuthServer.AuthCodes');
-        $this->AuthCodes
-            ->deleteAll([
+        $this->AuthCodes->deleteAll([
                 'code' => $token->getId()
             ]);
     }

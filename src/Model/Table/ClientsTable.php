@@ -14,7 +14,10 @@ use OAuthServer\Model\Entity\Client;
  */
 class ClientsTable extends Table
 {
-
+    /**
+     * @param array $config Config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->table('oauth_clients');
@@ -27,6 +30,11 @@ class ClientsTable extends Table
         parent::initialize($config);
     }
 
+    /**
+     * @param \Cake\Event\Event $event Event object
+     * @param \OAuthServer\Model\Entity\Client $client Client entity
+     * @return void
+     */
     public function beforeSave(Event $event, Client $client)
     {
         if ($client->isNew()) {

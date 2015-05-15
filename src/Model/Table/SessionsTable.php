@@ -3,41 +3,35 @@ namespace OAuthServer\Model\Table;
 
 use Cake\ORM\Table;
 
-class SessionsTable extends Table {
-
+class SessionsTable extends Table
+{
+    /**
+     * @param array $config Config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->table('oauth_sessions');
-        $this->hasMany(
-            'SessionScopes',
-            [
+        $this->hasMany('SessionScopes', [
                 'className' => 'OAuthServer.SessionScopes',
                 'foreignKey' => 'session_id',
                 'dependant' => true
-            ]
-        );
+            ]);
         $this->hasMany('AuthCodes', [
             'className' => 'OAuthServer.AuthCodes',
             'foreignKey' => 'session_id',
             'dependant' => true
         ]);
-        $this->hasMany(
-            'AccessTokens',
-            [
+        $this->hasMany('AccessTokens', [
                 'className' => 'OAuthServer.AccessTokens',
                 'foreignKey' => 'session_id',
                 'dependant' => true
-            ]
-        );
-        $this->hasMany(
-            'RefreshTokens',
-            [
+            ]);
+        $this->hasMany('RefreshTokens', [
                 'className' => 'OAuthServer.RefreshTokens',
                 'foreignKey' => 'session_id',
                 'dependant' => true
-            ]
-        );
+            ]);
         parent::initialize($config);
     }
-
 }

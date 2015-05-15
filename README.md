@@ -53,16 +53,16 @@ public function login()
         $user = $this->Auth->identify();
         if ($user) {
             $this->Auth->setUser($user);
-            $redirect_uri = $this->Auth->redirectUrl();
+            $redirectUri = $this->Auth->redirectUrl();
             if ($this->request->query['redir'] === 'oauth') {
-                $redirect_uri = [
+                $redirectUri = [
                     'plugin' => 'OAuthServer',
                     'controller' => 'OAuth',
                     'action' => 'authorize',
                     '?' => $this->request->query
                 ];
             }
-            return $this->redirect($redirect_uri);
+            return $this->redirect($redirectUri);
         } else {
             $this->Flash->error(
                 __('Username or password is incorrect'),

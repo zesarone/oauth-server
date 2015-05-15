@@ -16,6 +16,9 @@ class ScopesController extends AppController
 
     public $modelClass = 'OAuthServer.Scopes';
 
+    /**
+     * @return void
+     */
     public function initialize()
     {
         parent::initialize();

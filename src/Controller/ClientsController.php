@@ -16,6 +16,9 @@ class ClientsController extends AppController
 
     public $modelClass = 'OAuthServer.Clients';
 
+    /**
+     * @return void
+     */
     public function initialize()
     {
         parent::initialize();

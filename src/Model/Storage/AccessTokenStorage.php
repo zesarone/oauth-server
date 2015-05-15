@@ -10,7 +10,7 @@ use League\OAuth2\Server\Storage\AccessTokenInterface;
 class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function get($token)
     {
@@ -26,9 +26,8 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
             ->first();
 
         if ($result) {
-            return (new AccessTokenEntity($this->server))
-                        ->setId($result->oauth_token)
-                        ->setExpireTime($result->expires);
+            return (new AccessTokenEntity($this->server))->setId($result->oauth_token)
+                ->setExpireTime($result->expires);
         }
 
         return;
@@ -48,12 +47,10 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
                 'oauth_token' => $token->getId()
             ])
             ->map(function (Entity $scope) {
-                return (new ScopeEntity($this->server))->hydrate(
-                    [
-                        'id' => $scope->scope->id,
-                        'description' => $scope->scope->description,
-                    ]
-                );
+                return (new ScopeEntity($this->server))->hydrate([
+                    'id' => $scope->scope->id,
+                    'description' => $scope->scope->description,
+                ]);
             });
 
         return $result->toArray();
@@ -79,13 +76,11 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
     public function associateScope(AccessTokenEntity $token, ScopeEntity $scope)
     {
         $this->loadModel('OAuthServer.AccessTokenScopes');
-        $token_scope = $this->AccessTokenScopes->newEntity(
-            [
-                'oauth_token' => $token->getId(),
-                'scope_id' => $scope->getId(),
-            ]
-        );
-        $this->AccessTokenScopes->save($token_scope);
+        $tokenScope = $this->AccessTokenScopes->newEntity([
+            'oauth_token' => $token->getId(),
+            'scope_id' => $scope->getId(),
+        ]);
+        $this->AccessTokenScopes->save($tokenScope);
     }
 
     /**
@@ -94,8 +89,8 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
     public function delete(AccessTokenEntity $token)
     {
         $this->loadModel('OAuthServer.AccessTokens');
-        $access_token = $this->AccessTokens->findByOauthToken($token->getId())->first();
-        $this->AccessTokens
-            ->delete($access_token, ['cascade' => true]);
+        $accessToken = $this->AccessTokens->findByOauthToken($token->getId())
+            ->first();
+        $this->AccessTokens->delete($accessToken, ['cascade' => true]);
     }
 }

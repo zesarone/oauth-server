@@ -12,7 +12,7 @@ class Client extends Entity
     /**
      * Create a new, pretty (as in moderately, not beautiful - that can't be guaranteed ;-) random client secret
      *
-     * @return string
+     * @return void
      */
     public function generateSecret()
     {
@@ -33,6 +33,7 @@ class Client extends Entity
     }
 
     /**
+     * @param string $name Existing name
      * @return string
      */
     protected function _getName($name)

@@ -3,24 +3,21 @@ namespace OAuthServer\Model\Table;
 
 use Cake\ORM\Table;
 
-class SessionScopesTable extends Table {
-
+class SessionScopesTable extends Table
+{
+    /**
+     * @param array $config Config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->table('oauth_session_scopes');
-        $this->belongsTo(
-            'Sessions',
-            [
+        $this->belongsTo('Sessions', [
                 'className' => 'OAuthServer.Sessions',
-            ]
-        );
-        $this->belongsTo(
-            'Scopes',
-            [
+            ]);
+        $this->belongsTo('Scopes', [
                 'className' => 'OAuthServer.Scopes'
-            ]
-        );
+            ]);
         parent::initialize($config);
     }
-
 }

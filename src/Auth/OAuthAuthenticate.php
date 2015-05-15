@@ -27,7 +27,12 @@ class OAuthAuthenticate extends BaseAuthenticate
         'continue' => false,
     ];
 
-    public function __construct(ComponentRegistry $registry, $config) {
+    /**
+     * @param \Cake\Controller\ComponentRegistry $registry
+     * @param array $config
+     */
+    public function __construct(ComponentRegistry $registry, $config)
+    {
         parent::__construct($registry, $config);
 
         if ($this->config('server')) {
@@ -54,13 +59,18 @@ class OAuthAuthenticate extends BaseAuthenticate
      *
      * @param \Cake\Network\Request $request Request to get authentication information from.
      * @param \Cake\Network\Response $response A response object that can have headers added.
-     * @return mixed Either false on failure, or an array of user data on success.
+     * @return bool
      */
     public function authenticate(Request $request, Response $response)
     {
         return false;
     }
 
+    /**
+     * @param \Cake\Network\Request $request Request to get authentication information from.
+     * @param \Cake\Network\Response $response A response object that can have headers added.
+     * @return bool|\Cake\Network\Response
+     */
     public function unauthenticated(Request $request, Response $response)
     {
         if ($this->_config['continue']) {
@@ -102,5 +112,4 @@ class OAuthAuthenticate extends BaseAuthenticate
             return false;
         }
     }
-
 }

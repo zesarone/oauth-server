@@ -13,18 +13,16 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
     public function get($token)
     {
         $this->loadModel('OAuthServer.RefreshTokens');
-        $result = $this->RefreshTokens
-            ->find()
+        $result = $this->RefreshTokens->find()
             ->where([
                 'refresh_token' => $token
             ])
             ->first();
 
         if ($result) {
-            $token = (new RefreshTokenEntity($this->server))
-                        ->setId($result->refresh_token)
-                        ->setExpireTime($result->expires)
-                        ->setAccessTokenId($result->access_token);
+            $token = (new RefreshTokenEntity($this->server))->setId($result->refresh_token)
+                ->setExpireTime($result->expires)
+                ->setAccessTokenId($result->access_token);
 
             return $token;
         }
@@ -38,12 +36,12 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
     public function create($token, $expireTime, $accessToken)
     {
         $this->loadModel('OAuthServer.RefreshTokens');
-        $refresh_token = $this->RefreshTokens->newEntity([
+        $refreshToken = $this->RefreshTokens->newEntity([
             'refresh_token' => $token,
             'oauth_token' => $accessToken,
             'expires' => $expireTime,
         ]);
-        $this->RefreshTokens->save($refresh_token);
+        $this->RefreshTokens->save($refreshToken);
     }
 
     /**

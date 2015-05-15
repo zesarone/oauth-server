@@ -12,7 +12,10 @@ use Cake\ORM\Table;
  */
 class RefreshTokensTable extends Table
 {
-
+    /**
+     * @param array $config Config
+     * @return void
+     */
     public function initialize(array $config)
     {
         $this->table('oauth_refresh_tokens');
@@ -23,5 +26,4 @@ class RefreshTokensTable extends Table
         ]);
         parent::initialize($config);
     }
-
 }

@@ -20,12 +20,10 @@ class ScopeStorage extends AbstractStorage implements ScopeInterface
             ->first();
 
         if ($result) {
-            return (new ScopeEntity($this->server))->hydrate(
-                [
+            return (new ScopeEntity($this->server))->hydrate([
                     'id' => $result->id,
                     'description' => $result->description,
-                ]
-            );
+                ]);
         }
 
         return;

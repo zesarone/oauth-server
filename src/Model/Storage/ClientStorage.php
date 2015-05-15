@@ -14,8 +14,7 @@ class ClientStorage extends AbstractStorage implements ClientInterface
     public function get($clientId, $clientSecret = null, $redirectUri = null, $grantType = null)
     {
         $this->loadModel('OAuthServer.Clients');
-        $query = $this->Clients
-            ->find()
+        $query = $this->Clients->find()
             ->where([
                 $this->Clients->aliasField('id') => $clientId
             ]);
@@ -32,8 +31,8 @@ class ClientStorage extends AbstractStorage implements ClientInterface
         if ($result) {
             $client = new ClientEntity($this->server);
             $client->hydrate([
-                'id'    =>  $result->id,
-                'name'  =>  $result->name
+                'id' => $result->id,
+                'name' => $result->name
             ]);
 
             return $client;
@@ -48,8 +47,7 @@ class ClientStorage extends AbstractStorage implements ClientInterface
     public function getBySession(SessionEntity $session)
     {
         $this->loadModel('OAuthServer.Sessions');
-        $result = $this->Sessions
-            ->find()
+        $result = $this->Sessions->find()
             ->contain(['Clients'])
             ->where([
                 'id' => $session->getId()
@@ -59,8 +57,8 @@ class ClientStorage extends AbstractStorage implements ClientInterface
         if ($result) {
             $client = new ClientEntity($this->server);
             $client->hydrate([
-                'id'    =>  $result->client->id,
-                'name'  =>  $result->client->name,
+                'id' => $result->client->id,
+                'name' => $result->client->name,
             ]);
 
             return $client;
