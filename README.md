@@ -32,7 +32,7 @@ If you do not, please read [the authentication chapter](http://book.cakephp.org/
 
 Set OAuthServer as an authentication adaptor.
 
-In your `AppController` `beforeFilter` method, add (or modify)
+In your `AppController::beforeFilter()` method, add (or modify)
 
 ```php
 $this->Auth->config('authenticate', [
