@@ -81,10 +81,10 @@ class InitialMigration extends AbstractMigration
                 ]
             )
             ->create();
-        $table = $this->table('oauth_clients', ['id' => false, 'primary_key' => ['client_id']]);
+        $table = $this->table('oauth_clients', ['id' => false, 'primary_key' => ['id']]);
         $table
             ->addColumn(
-                'client_id',
+                'id',
                 'string',
                 [
                     'default' => null,
@@ -98,6 +98,15 @@ class InitialMigration extends AbstractMigration
                 [
                     'default' => null,
                     'limit' => 40,
+                    'null' => false,
+                ]
+            )
+            ->addColumn(
+                'name',
+                'string',
+                [
+                    'default' => null,
+                    'limit' => 200,
                     'null' => false,
                 ]
             )
