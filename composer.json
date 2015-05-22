@@ -8,7 +8,6 @@
         "cakephp/cakephp": "~3.0.0",
         "league/oauth2-server": "~4.1",
         "cakephp/migrations": "~1.0.0",
-        "friendsofcake/crud-view": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5"
