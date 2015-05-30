@@ -17,9 +17,6 @@ Once composer has installed the package, the plugin needs to be activated by run
 
 ```bash
 $ bin/cake plugin load OAuthServer --routes
-$ bin/cake plugin load Crud
-$ bin/cake plugin load CrudView
-$ bin/cake plugin load BootstrapUI
 ```
 
 Finally the database migrations need to be run.
