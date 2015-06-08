@@ -16,7 +16,7 @@ $ composer require uafrica/oauth-server
 Once composer has installed the package, the plugin needs to be activated by running:
 
 ```bash
-$ bin/cake plugin load OAuthServer --routes
+$ bin/cake plugin load -r OAuthServer
 ```
 
 Finally the database migrations need to be run.
