@@ -81,7 +81,7 @@ class OAuthController extends AppController
             $query = $this->request->query;
             $query['redir'] = 'oauth';
 
-            $this->redirect(
+            return $this->redirect(
                 [
                     'plugin' => false,
                     'controller' => 'Users',
