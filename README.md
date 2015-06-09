@@ -37,7 +37,7 @@ In your `AppController::beforeFilter()` method, add (or modify)
 ```php
 $this->Auth->config('authenticate', [
     'Form',
-    'OAuthServer'
+    'OAuthServer.OAuth'
 ]);
 ```
 
