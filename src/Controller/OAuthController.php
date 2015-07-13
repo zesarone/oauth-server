@@ -2,6 +2,7 @@
 namespace OAuthServer\Controller;
 
 use App\Controller\AppController;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use League\OAuth2\Server\Exception\AccessDeniedException;
