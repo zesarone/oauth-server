@@ -20,7 +20,7 @@ class OAuthController extends AppController
      */
     public function initialize()
     {
-        $this->loadComponent('OAuthServer.OAuth');
+        $this->loadComponent('OAuthServer.OAuth', Configure::read('OAuth'));
         $this->loadComponent('RequestHandler');
         parent::initialize();
     }
@@ -133,10 +133,8 @@ class OAuthController extends AppController
     {
         try {
             $response = $this->OAuth->Server->issueAccessToken();
-            $this->RequestHandler->renderAs($this, 'json');
             $this->set('response', $response);
         } catch (OAuthException $e) {
-            $this->RequestHandler->renderAs($this, 'json');
             $this->response->statusCode($e->httpStatusCode);
             $headers = $e->getHttpHeaders();
             array_shift($headers);

@@ -2,8 +2,11 @@
 namespace OAuthServer\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Core\App;
+use Cake\Network\Exception\NotImplementedException;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
+use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use OAuthServer\Model\Storage;
 
@@ -14,6 +17,21 @@ class OAuthComponent extends Component
      * @var \League\OAuth2\Server\AuthorizationServer
      */
     public $Server;
+
+    /**
+     * Grant types currently supported by the plugin
+     *
+     * @var array
+     */
+    protected $_allowedGrants = ['AuthCode', 'RefreshToken', 'ClientCredentials'];
+
+    /**
+     * @var array
+     */
+    protected $_defaultConfig = [
+        'tokenTTL' => 30 * 24 * 60 * 60, //TTL in seconds
+        'supportedGrants' => ['AuthCode', 'RefreshToken', 'ClientCredentials']
+    ];
 
     /**
      * @param array $config Config array
@@ -30,16 +48,18 @@ class OAuthComponent extends Component
         $server->setAuthCodeStorage(new Storage\AuthCodeStorage());
         $server->setRefreshTokenStorage(new Storage\RefreshTokenStorage());
 
-        $authCodeGrant = new AuthCodeGrant();
-        $refreshTokenGrant = new RefreshTokenGrant();
-        $server->addGrantType($authCodeGrant);
-        $server->addGrantType($refreshTokenGrant);
+        foreach ($this->config('supportedGrants') as $grant) {
+            if (!in_array($grant, $this->_allowedGrants)) {
+                throw new NotImplementedException(__('The {0} grant type is not supported by the OAuth server'));
+            }
 
-        $server->setAccessTokenTTL(30 * 24 * 60 * 60);
+            $class_name = '\\League\\OAuth2\\Server\\Grant\\' . $grant . 'Grant';
+            $server->addGrantType(new $class_name());
+        }
+
+        $server->setAccessTokenTTL($this->config('tokenTTL'));
 
         $this->Server = $server;
-
-        parent::initialize($config);
     }
 
     /**
