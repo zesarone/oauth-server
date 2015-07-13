@@ -48,7 +48,8 @@ class OAuthComponent extends Component
         $server->setAuthCodeStorage(new Storage\AuthCodeStorage());
         $server->setRefreshTokenStorage(new Storage\RefreshTokenStorage());
 
-        foreach ($this->config('supportedGrants') as $grant) {
+        $supportedGrants = isset($config['supportedGrants']) ? $config['supportedGrants'] : $this->config('supportedGrants');
+        foreach ($supportedGrants as $grant) {
             if (!in_array($grant, $this->_allowedGrants)) {
                 throw new NotImplementedException(__('The {0} grant type is not supported by the OAuth server'));
             }
