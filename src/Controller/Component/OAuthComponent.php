@@ -29,7 +29,7 @@ class OAuthComponent extends Component
      * @var array
      */
     protected $_defaultConfig = [
-        'tokenTTL' => 30 * 24 * 60 * 60, //TTL in seconds
+        'tokenTTL' => 2592000, //TTL 30 * 24 * 60 * 60 in seconds
         'supportedGrants' => ['AuthCode', 'RefreshToken', 'ClientCredentials']
     ];
 
