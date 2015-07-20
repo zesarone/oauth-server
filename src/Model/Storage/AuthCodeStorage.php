@@ -35,8 +35,6 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
 
             return $token;
         }
-
-        return;
     }
 
     /**
@@ -64,7 +62,7 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
      * {@inheritdoc}
      *
      * @param \League\OAuth2\Server\Entity\AuthCodeEntity $token Auth code
-     * @return mixed
+     * @return array
      */
     public function getScopes(AuthCodeEntity $token)
     {

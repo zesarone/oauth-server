@@ -36,8 +36,8 @@ class OAuthAuthenticate extends BaseAuthenticate
     ];
 
     /**
-     * @param \Cake\Controller\ComponentRegistry $registry
-     * @param array $config
+     * @param \Cake\Controller\ComponentRegistry $registry Component registry
+     * @param array $config Config array
      */
     public function __construct(ComponentRegistry $registry, $config)
     {
