@@ -21,15 +21,23 @@ class OAuthAuthenticate extends BaseAuthenticate
      */
     public $Server;
 
+    /**
+     * Exception that was thrown by oauth server
+     *
+     * @var \League\OAuth2\Server\Exception\OAuthException
+     */
     protected $_exception;
 
+    /**
+     * @var array
+     */
     protected $_defaultConfig = [
         'continue' => false,
     ];
 
     /**
-     * @param \Cake\Controller\ComponentRegistry $registry
-     * @param array $config
+     * @param \Cake\Controller\ComponentRegistry $registry Component registry
+     * @param array $config Config array
      */
     public function __construct(ComponentRegistry $registry, $config)
     {
@@ -93,6 +101,10 @@ class OAuthAuthenticate extends BaseAuthenticate
         throw new BadRequestException($message);
     }
 
+    /**
+     * @param \Cake\Network\Request $request Request object
+     * @return array|bool|mixed
+     */
     public function getUser(Request $request)
     {
         try {

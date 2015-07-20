@@ -13,6 +13,9 @@ class SessionStorage extends AbstractStorage implements SessionInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\AccessTokenEntity $accessToken Access token
+     * @return \League\OAuth2\Server\Entity\SessionEntity
      */
     public function getByAccessToken(AccessTokenEntity $accessToken)
     {
@@ -32,12 +35,13 @@ class SessionStorage extends AbstractStorage implements SessionInterface
 
             return $session;
         }
-
-        return;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\AuthCodeEntity $authCode Auth code
+     * @return \League\OAuth2\Server\Entity\SessionEntity
      */
     public function getByAuthCode(AuthCodeEntity $authCode)
     {
@@ -57,12 +61,13 @@ class SessionStorage extends AbstractStorage implements SessionInterface
 
             return $session;
         }
-
-        return;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\SessionEntity $session Session entity
+     * @return array
      */
     public function getScopes(SessionEntity $session)
     {
@@ -86,6 +91,12 @@ class SessionStorage extends AbstractStorage implements SessionInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $ownerType Type of owner
+     * @param string $ownerId Owner id
+     * @param string $clientId Client id
+     * @param null|string $clientRedirectUri Redirect uri
+     * @return int
      */
     public function create($ownerType, $ownerId, $clientId, $clientRedirectUri = null)
     {
@@ -102,6 +113,10 @@ class SessionStorage extends AbstractStorage implements SessionInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\SessionEntity $session Session entity
+     * @param \League\OAuth2\Server\Entity\ScopeEntity $scope Scope entity
+     * @return void
      */
     public function associateScope(SessionEntity $session, ScopeEntity $scope)
     {

@@ -10,7 +10,10 @@ use League\OAuth2\Server\Storage\AccessTokenInterface;
 class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+
+     * @param string $token Token to check
+     * @return \League\OAuth2\Server\Entity\AbstractTokenEntity
      */
     public function get($token)
     {
@@ -29,12 +32,13 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
             return (new AccessTokenEntity($this->server))->setId($result->oauth_token)
                 ->setExpireTime($result->expires);
         }
-
-        return;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\AccessTokenEntity $token Token entity
+     * @return mixed
      */
     public function getScopes(AccessTokenEntity $token)
     {
@@ -58,6 +62,11 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $token Token
+     * @param int $expireTime Time token expires
+     * @param int|string $sessionId Session id
+     * @return void
      */
     public function create($token, $expireTime, $sessionId)
     {
@@ -72,6 +81,10 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\AccessTokenEntity $token Token entity
+     * @param \League\OAuth2\Server\Entity\ScopeEntity $scope Scope entity
+     * @return void
      */
     public function associateScope(AccessTokenEntity $token, ScopeEntity $scope)
     {
@@ -85,6 +98,9 @@ class AccessTokenStorage extends AbstractStorage implements AccessTokenInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\AccessTokenEntity $token Token entity
+     * @return void
      */
     public function delete(AccessTokenEntity $token)
     {

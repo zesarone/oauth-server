@@ -9,6 +9,9 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
 {
     /**
      * {@inheritdoc}
+     *
+     * @param string $token Token
+     * @return string
      */
     public function get($token)
     {
@@ -26,12 +29,15 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
 
             return $token;
         }
-
-        return;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param string $token Token
+     * @param int $expireTime Expiry time
+     * @param string $accessToken Access token
+     * @return void
      */
     public function create($token, $expireTime, $accessToken)
     {
@@ -46,6 +52,9 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\RefreshTokenEntity $token Refresh token
+     * @return void
      */
     public function delete(RefreshTokenEntity $token)
     {

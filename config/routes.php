@@ -1,5 +1,5 @@
 <?php
-\Cake\Routing\Router::plugin('OAuthServer', ['path' => '/oauth'], function(\Cake\Routing\RouteBuilder $routes) {
+\Cake\Routing\Router::plugin('OAuthServer', ['path' => '/oauth'], function (\Cake\Routing\RouteBuilder $routes) {
     $routes->extensions(['json']);
     $routes->connect(
         '/',
