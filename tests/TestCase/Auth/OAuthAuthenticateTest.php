@@ -6,7 +6,8 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use OAuthServer\Auth\OAuthAuthenticate;
 
-class OAuthAuthenticateTest extends TestCase {
+class OAuthAuthenticateTest extends TestCase
+{
 
     /**
      * setup

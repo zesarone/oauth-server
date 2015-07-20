@@ -54,8 +54,8 @@ class OAuthComponent extends Component
                 throw new NotImplementedException(__('The {0} grant type is not supported by the OAuth server'));
             }
 
-            $class_name = '\\League\\OAuth2\\Server\\Grant\\' . $grant . 'Grant';
-            $server->addGrantType(new $class_name());
+            $className = '\\League\\OAuth2\\Server\\Grant\\' . $grant . 'Grant';
+            $server->addGrantType(new $className());
         }
 
         $server->setAccessTokenTTL($this->config('tokenTTL'));
@@ -67,7 +67,8 @@ class OAuthComponent extends Component
      * @param string $authGrant Grant type
      * @return bool|\Cake\Network\Response|void
      */
-    public function checkAuthParams($authGrant) {
+    public function checkAuthParams($authGrant)
+    {
         $controller = $this->_registry->getController();
         try {
             return $this->Server->getGrantType($authGrant)->checkAuthorizeParams();

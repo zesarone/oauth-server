@@ -10,8 +10,12 @@ use League\OAuth2\Server\Storage\AuthCodeInterface;
 
 class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
 {
+
     /**
      * {@inheritdoc}
+     *
+     * @param string $code Code
+     * @return \League\OAuth2\Server\Entity\AuthCodeEntity|void
      */
     public function get($code)
     {
@@ -36,7 +40,13 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
+     *
+     * @param string $token Token
+     * @param int $expireTime Expire time
+     * @param int $sessionId Session
+     * @param string $redirectUri Redirect
+     * @return void
      */
     public function create($token, $expireTime, $sessionId, $redirectUri)
     {
@@ -52,6 +62,9 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\AuthCodeEntity $token Auth code
+     * @return mixed
      */
     public function getScopes(AuthCodeEntity $token)
     {
@@ -75,6 +88,10 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\AuthCodeEntity $token Auth code
+     * @param \League\OAuth2\Server\Entity\ScopeEntity $scope Scopes
+     * @return void
      */
     public function associateScope(AuthCodeEntity $token, ScopeEntity $scope)
     {
@@ -88,6 +105,9 @@ class AuthCodeStorage extends AbstractStorage implements AuthCodeInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\AuthCodeEntity $token Auth code
+     * @return void
      */
     public function delete(AuthCodeEntity $token)
     {

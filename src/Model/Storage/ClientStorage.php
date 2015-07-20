@@ -10,6 +10,12 @@ class ClientStorage extends AbstractStorage implements ClientInterface
 {
     /**
      * {@inheritdoc}
+     *
+     * @param string $clientId Client id
+     * @param null $clientSecret Client secret
+     * @param null $redirectUri Redirect uri
+     * @param null $grantType Grant type
+     * @return \League\OAuth2\Server\Entity\ClientEntity
      */
     public function get($clientId, $clientSecret = null, $redirectUri = null, $grantType = null)
     {
@@ -37,12 +43,13 @@ class ClientStorage extends AbstractStorage implements ClientInterface
 
             return $client;
         }
-
-        return;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param \League\OAuth2\Server\Entity\SessionEntity $session Session entity
+     * @return \League\OAuth2\Server\Entity\ClientEntity
      */
     public function getBySession(SessionEntity $session)
     {
@@ -63,7 +70,5 @@ class ClientStorage extends AbstractStorage implements ClientInterface
 
             return $client;
         }
-
-        return;
     }
 }
