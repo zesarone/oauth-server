@@ -32,6 +32,10 @@ class SessionsTable extends Table
                 'foreignKey' => 'session_id',
                 'dependant' => true
             ]);
+        $this->belongsTo('Clients', [
+                'className' => 'OAuthServer.Clients',
+                'foreignKey' => 'client_id'
+            ]);    
         parent::initialize($config);
     }
 }
