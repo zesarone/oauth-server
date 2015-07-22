@@ -112,13 +112,10 @@ class OAuthController extends AppController
 
             $error = new AccessDeniedException();
 
-            $redirectUri = new RedirectUri(
-                $authParams['redirect_uri'],
-                [
-                    'error' => $error->errorType,
-                    'message' => $error->getMessage()
-                ]
-            );
+			$redirectUri = RedirectUri::make($authParams['redirect_uri'], [
+				'error' => $error->errorType,
+				'message' => $error->getMessage()
+			]);
 
             return $this->redirect($redirectUri);
         }
