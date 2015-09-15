@@ -25,7 +25,7 @@ class RefreshTokenStorage extends AbstractStorage implements RefreshTokenInterfa
         if ($result) {
             $token = (new RefreshTokenEntity($this->server))->setId($result->refresh_token)
                 ->setExpireTime($result->expires)
-                ->setAccessTokenId($result->access_token);
+                ->setAccessTokenId($result->oauth_token);
 
             return $token;
         }
