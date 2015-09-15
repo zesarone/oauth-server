@@ -95,8 +95,10 @@ class OAuthController extends AppController
         $event = new Event('OAuthServer.beforeAuthorize', $this);
         EventManager::instance()->dispatch($event);
 
+        $serialize_keys = [];
         if (is_array($event->result)) {
             $this->set($event->result);
+            $serialize_keys = array_keys($event->result);
         }
 
         if ($this->request->is('post') && $this->request->data['authorization'] === 'Approve') {
@@ -122,6 +124,7 @@ class OAuthController extends AppController
 
         $this->set('authParams', $authParams);
         $this->set('user', $this->Auth->user());
+        $this->set('_serialize', array_merge(['user', 'authParams'], $serialize_keys));
     }
 
     /**
@@ -131,13 +134,18 @@ class OAuthController extends AppController
     {
         try {
             $response = $this->OAuth->Server->issueAccessToken();
-            $this->set('response', $response);
+            $this->set($response);
+            $this->set('_serialize', array_keys($response));
         } catch (OAuthException $e) {
             $this->response->statusCode($e->httpStatusCode);
             $headers = $e->getHttpHeaders();
             array_shift($headers);
             $this->response->header($headers);
-            $this->set('response', $e);
+            $this->set([
+                'error' => $e->errorType,
+                'message' => $e->getMessage()
+            ]);
+            $this->set('_serialize', ['error','message']);
         }
     }
 }
