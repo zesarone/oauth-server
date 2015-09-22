@@ -57,7 +57,7 @@ class ClientStorage extends AbstractStorage implements ClientInterface
         $result = $this->Sessions->find()
             ->contain(['Clients'])
             ->where([
-                'id' => $session->getId()
+                'Sessions.id' => $session->getId()
             ])
             ->first();
 
