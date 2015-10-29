@@ -3,6 +3,7 @@ namespace OAuthServer\Auth;
 
 use Cake\Auth\BaseAuthenticate;
 use Cake\Controller\ComponentRegistry;
+use Cake\Database\Exception;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\Network\Exception\BadRequestException;
@@ -122,19 +123,34 @@ class OAuthAuthenticate extends BaseAuthenticate
     {
         try {
             $this->Server->isValidRequest(true, $request->query('access_token'));
-            $ownerModel = $this->Server->getAccessToken()->getSession()->getOwnerType();
-            $ownerId = $this->Server->getAccessToken()->getSession()->getOwnerId();
-            $event = new Event('OAuthServer.getUser', $request, [$ownerModel, $ownerId]);
-            EventManager::instance()->dispatch($event);
-            if ($event->result) {
-                return $event->result;
-            } else {
-                $model = TableRegistry::get($ownerModel);
-                return $model->get($ownerId)->toArray();
-            }
         } catch (OAuthException $e) {
             $this->_exception = $e;
             return false;
+        }
+        $ownerModel = $this->Server
+            ->getAccessToken()
+            ->getSession()
+            ->getOwnerType();
+        $ownerId = $this->Server
+            ->getAccessToken()
+            ->getSession()
+            ->getOwnerId();
+
+        try {
+            $owner = TableRegistry::get($ownerModel)
+                ->get($ownerId)
+                ->toArray();
+        } catch (Exception $e) {
+            $this->_exception = $e;
+            $owner = null;
+        }
+
+        $event = new Event('OAuthServer.getUser', $request, [$ownerModel, $ownerId, $owner]);
+        EventManager::instance()->dispatch($event);
+        if ($event->result !== null) {
+            return $event->result;
+        } else {
+            return $owner;
         }
     }
 }
