@@ -7,6 +7,13 @@ use Cake\Core\Exception\Exception;
 
 trait GetStorageTrait
 {
+    /**
+     * Resolve a storage class name.
+     *
+     * @param string $class Partial class name to resolve.
+     * @return string The resolved class name.
+     * @throws \Cake\Core\Exception\Exception
+     */
     protected function _resolveClassName($class)
     {
         $className = App::className($class, 'Model/Storage', 'Storage');
@@ -16,6 +23,13 @@ trait GetStorageTrait
         return $className;
     }
 
+    /**
+     * Gets the instance of a storage class by name.
+     *
+     * @param string $name Storage name.
+     * @return \League\OAuth2\Server\Storage\AbstractStorage
+     * @throws \Cake\Core\Exception\Exception
+     */
     protected function _getStorage($name)
     {
         $config = $this->config('storages.' . $name);
