@@ -3,6 +3,7 @@ namespace OAuthServer\Auth;
 
 use Cake\Auth\BaseAuthenticate;
 use Cake\Controller\ComponentRegistry;
+use Cake\Core\App;
 use Cake\Database\Exception;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
@@ -11,11 +12,12 @@ use Cake\Network\Request;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use League\OAuth2\Server\Exception\OAuthException;
-use League\OAuth2\Server\ResourceServer;
 use OAuthServer\Model\Storage;
+use OAuthServer\Traits\GetStorageTrait;
 
 class OAuthAuthenticate extends BaseAuthenticate
 {
+    use GetStorageTrait;
 
     /**
      * @var \League\OAuth2\Server\ResourceServer
@@ -34,6 +36,23 @@ class OAuthAuthenticate extends BaseAuthenticate
      */
     protected $_defaultConfig = [
         'continue' => false,
+        'storages' => [
+            'session' => [
+                'className' => 'OAuthServer.Session'
+            ],
+            'accessToken' => [
+                'className' => 'OAuthServer.AccessToken'
+            ],
+            'client' => [
+                'className' => 'OAuthServer.Client'
+            ],
+            'scope' => [
+                'className' => 'OAuthServer.Scope'
+            ]
+        ],
+        'resourceServer' => [
+            'className' => 'League\OAuth2\Server\ResourceServer'
+        ]
     ];
 
     /**
@@ -46,21 +65,24 @@ class OAuthAuthenticate extends BaseAuthenticate
 
         if ($this->config('server')) {
             $this->Server = $this->config('server');
-        } else {
-            $sessionStorage = new Storage\SessionStorage();
-            $accessTokenStorage = new Storage\AccessTokenStorage();
-            $clientStorage = new Storage\ClientStorage();
-            $scopeStorage = new Storage\ScopeStorage();
-
-            $server = new ResourceServer(
-                $sessionStorage,
-                $accessTokenStorage,
-                $clientStorage,
-                $scopeStorage
-            );
-
-            $this->Server = $server;
+            return;
         }
+
+        $serverConfig = $this->config('resourceServer');
+        $serverClassName = App::className($serverConfig['className']);
+
+        if (!$serverClassName) {
+            throw new Exception('ResourceServer class was not found.');
+        }
+
+        $server = new $serverClassName(
+            $this->_getStorage('session'),
+            $this->_getStorage('accessToken'),
+            $this->_getStorage('client'),
+            $this->_getStorage('scope')
+        );
+
+        $this->Server = $server;
     }
 
     /**

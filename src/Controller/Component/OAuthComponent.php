@@ -4,14 +4,12 @@ namespace OAuthServer\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Core\App;
 use Cake\Network\Exception\NotImplementedException;
-use League\OAuth2\Server\AuthorizationServer;
-use League\OAuth2\Server\Grant\AuthCodeGrant;
-use League\OAuth2\Server\Grant\ClientCredentialsGrant;
-use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use OAuthServer\Model\Storage;
+use OAuthServer\Traits\GetStorageTrait;
 
 class OAuthComponent extends Component
 {
+    use GetStorageTrait;
 
     /**
      * @var \League\OAuth2\Server\AuthorizationServer
@@ -30,8 +28,41 @@ class OAuthComponent extends Component
      */
     protected $_defaultConfig = [
         'tokenTTL' => 2592000, //TTL 30 * 24 * 60 * 60 in seconds
-        'supportedGrants' => ['AuthCode', 'RefreshToken', 'ClientCredentials']
+        'supportedGrants' => ['AuthCode', 'RefreshToken', 'ClientCredentials'],
+        'storages' => [
+            'session' => [
+                'className' => 'OAuthServer.Session'
+            ],
+            'accessToken' => [
+                'className' => 'OAuthServer.AccessToken'
+            ],
+            'client' => [
+                'className' => 'OAuthServer.Client'
+            ],
+            'scope' => [
+                'className' => 'OAuthServer.Scope'
+            ],
+            'authCode' => [
+                'className' => 'OAuthServer.AuthCode'
+            ],
+            'refreshToken' => [
+                'className' => 'OAuthServer.RefreshToken'
+            ]
+        ],
+        'authorizationServer' => [
+            'className' => 'League\OAuth2\Server\AuthorizationServer'
+        ]
     ];
+
+    /**
+     * @return \League\OAuth2\Server\AuthorizationServer
+     */
+    protected function _getAuthorizationServer()
+    {
+        $serverConfig = $this->config('authorizationServer');
+        $serverClassName = App::className($serverConfig['className']);
+        return new $serverClassName();
+    }
 
     /**
      * @param array $config Config array
@@ -39,14 +70,13 @@ class OAuthComponent extends Component
      */
     public function initialize(array $config)
     {
-        $server = new AuthorizationServer();
-
-        $server->setSessionStorage(new Storage\SessionStorage());
-        $server->setAccessTokenStorage(new Storage\AccessTokenStorage());
-        $server->setClientStorage(new Storage\ClientStorage());
-        $server->setScopeStorage(new Storage\ScopeStorage());
-        $server->setAuthCodeStorage(new Storage\AuthCodeStorage());
-        $server->setRefreshTokenStorage(new Storage\RefreshTokenStorage());
+        $server = $this->_getAuthorizationServer();
+        $server->setSessionStorage($this->_getStorage('session'));
+        $server->setAccessTokenStorage($this->_getStorage('accessToken'));
+        $server->setClientStorage($this->_getStorage('client'));
+        $server->setScopeStorage($this->_getStorage('scope'));
+        $server->setAuthCodeStorage($this->_getStorage('authCode'));
+        $server->setRefreshTokenStorage($this->_getStorage('refreshToken'));
 
         $supportedGrants = isset($config['supportedGrants']) ? $config['supportedGrants'] : $this->config('supportedGrants');
         foreach ($supportedGrants as $grant) {
