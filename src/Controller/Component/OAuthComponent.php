@@ -21,14 +21,14 @@ class OAuthComponent extends Component
      *
      * @var array
      */
-    protected $_allowedGrants = ['AuthCode', 'RefreshToken', 'ClientCredentials'];
+    protected $_allowedGrants = ['AuthCode', 'RefreshToken', 'ClientCredentials','Password'];
 
     /**
      * @var array
      */
     protected $_defaultConfig = [
         'tokenTTL' => 2592000, //TTL 30 * 24 * 60 * 60 in seconds
-        'supportedGrants' => ['AuthCode', 'RefreshToken', 'ClientCredentials'],
+        'supportedGrants' => ['AuthCode', 'RefreshToken', 'ClientCredentials','Password'],
         'storages' => [
             'session' => [
                 'className' => 'OAuthServer.Session'
