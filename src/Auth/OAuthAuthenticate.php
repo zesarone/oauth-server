@@ -105,7 +105,7 @@ class OAuthAuthenticate extends BaseAuthenticate
     public function unauthenticated(Request $request, Response $response)
     {
         if ($this->_config['continue']) {
-            return false;
+            return null;
         }
         if (isset($this->_exception)) {
             $response->statusCode($this->_exception->httpStatusCode);
